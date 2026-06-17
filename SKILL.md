@@ -17,8 +17,8 @@ A thinking partner for project definition. This skill helps users articulate wha
 
 - **Contradictions are leads, not errors.** When a user selects conflicting options, probe for the reconciling insight—there's often a core idea that makes apparent contradictions work together.
 - **Challenge weak answers directly.** Ask follow-up questions until clarity emerges. Be curious but persistent.
-- **Unchecked items are silent data.** Don't interrogate every non-selection—only probe unchecked items if they create contradictions with checked items.
-- **The user knows when they need structure.** Default to open dialog; offer structured input when the user requests it or seems stuck.
+- **Unselected options are silent data.** Don't interrogate every non-selection—only probe an unselected option if it contradicts a selected one.
+- **The user knows when they need structure.** Default to open dialog; provide structured input *only* when the user explicitly requests it or is clearly stuck—never volunteer it.
 - **Some assumptions don't need surfacing.** Settled realities (users won't all read docs, requirements will change) should be designed around, not asked about.
 
 ---
@@ -27,33 +27,40 @@ A thinking partner for project definition. This skill helps users articulate wha
 
 ### Default Mode: Open Dialog
 
-Ask open-ended questions. Probe. Challenge vague language. Follow interesting threads.
+Ask open-ended questions, **one at a time**. Probe. Challenge vague language. Follow interesting threads. This is the default for the entire interrogation.
 
-The user can request structured input at any time by saying something like:
+**Never volunteer structured option lists.** Do not present checklists, multiple-choice menus, or ranked options unless the user has explicitly asked for them or has clearly stalled (e.g., "I don't know," "give me options," "help me think through this"). When in doubt, ask another open question instead. A surprise menu interrupts the user's thinking, and on a plain terminal it can read as a clickable control that isn't actually one.
+
+The user can request structure at any time by saying something like:
 - "Show me options"
 - "Help me think through this"
 - "What are my choices here?"
 - "Can you give me a checklist?"
 
-### Structured Input (User-Invoked)
+### Structured Input (User-Invoked Only)
 
-When the user requests structure, generate contextually relevant options:
+Only when the user requests structure (or has clearly stalled), generate contextually relevant options.
 
-**Checkbox lists**: Good for surfacing assumptions, priorities, or features. Analyze selections for:
+**Format rule — present options as a plain text list the user types a reply to.** This skill runs in a terminal where there is nothing to click. Number or letter each option and ask the user to reply with the ones that apply. A typed reply is processed exactly like a click would be, so a plain list is fully functional and loses nothing.
+
+- **Do NOT** render Markdown checkbox glyphs (`☐`, `[ ]`) or anything else that imitates a clickable control. Inert glyphs that look interactive but aren't are the specific failure this rule prevents.
+- Keep lists scannable—group long sets under sub-headings (see Phase 6 for the pattern).
+
+**Checklists (multi-select)**: Good for surfacing assumptions, priorities, or features. Present as a lettered list; ask the user to reply with the letters that apply. Analyze the reply for:
 - Contradictions → probe for the reconciling insight
 - Clusters → reflect back the pattern, confirm priority
-- Gaps → note silently unless they create contradictions
+- Gaps → note silently unless they contradict a selected item
 
-**Single-select**: Good for forcing a choice between tradeoffs. 
+**Single-select**: Good for forcing a choice between tradeoffs. Present as a lettered list; ask the user to reply with one letter.
 
 **CRITICAL: Every single-select must include an escape hatch** such as:
 - "It's more nuanced than this"
-- "Neither / both / it depends"  
+- "Neither / both / it depends"
 - "Let me explain"
 
-When the user selects the escape hatch, switch to open dialog and ask them to elaborate.
+When the user picks the escape hatch, switch to open dialog and ask them to elaborate.
 
-**Ranking**: Good for establishing priority order among competing concerns.
+**Ranking**: Good for establishing priority order among competing concerns. Ask the user to reply with the letters in priority order.
 
 After processing structured input, return to open dialog.
 
@@ -124,7 +131,7 @@ Understand the environment and limitations.
 
 ### Phase 6: Assumption Surfacing
 
-Find the hidden landmines. This phase benefits most from structured input when the user requests it.
+Find the hidden landmines. A structured checklist is especially useful here—but only offer one if the user asks for it or stalls (see Interaction Model). Otherwise, work through these as open questions.
 
 **Key questions**:
 - "What are you taking for granted that might not be true?"
@@ -132,32 +139,33 @@ Find the hidden landmines. This phase benefits most from structured input when t
 - "What's the riskiest assumption you're making?"
 - "What don't you know yet that you'll need to figure out?"
 
-**Example checkbox set** (generate contextually relevant versions):
+**Example checklist** (only when the user requests structure; generate contextually relevant versions). Present it as a typed list and ask the user to reply with the letters that apply—never as clickable glyphs:
 
 ```
-Which of these are you assuming to be true? (select all that apply)
+Which of these are you assuming to be true?
+Reply with the letters that apply (e.g. "a, e, h"):
 
 About the user:
-☐ Users have domain expertise (know the problem space)
-☐ Users have technical expertise (know the tools)
-☐ Users will start with simple cases before complex ones
-☐ Users know what they want before they begin
+  a) Users have domain expertise (know the problem space)
+  b) Users have technical expertise (know the tools)
+  c) Users will start with simple cases before complex ones
+  d) Users know what they want before they begin
 
 About the project:
-☐ Requirements are stable and won't change much
-☐ This will be used by people other than me
-☐ This needs to work long-term (not a one-off)
-☐ Performance matters more than development speed
-☐ Correctness matters more than completeness
+  e) Requirements are stable and won't change much
+  f) This will be used by people other than me
+  g) This needs to work long-term (not a one-off)
+  h) Performance matters more than development speed
+  i) Correctness matters more than completeness
 
 About the environment:
-☐ Dependencies/tools I'm using will remain stable
-☐ I have access to everything I need to build this
-☐ I understand the problem well enough to start
-☐ Similar solutions exist that I can learn from
+  j) Dependencies/tools I'm using will remain stable
+  k) I have access to everything I need to build this
+  l) I understand the problem well enough to start
+  m) Similar solutions exist that I can learn from
 ```
 
-Analyze for contradictions. Checked items that conflict deserve probing. Unchecked items are noted but not interrogated unless they conflict with checked items.
+Analyze the reply for contradictions. Selected items that conflict deserve probing. Unselected items are noted but not interrogated unless they conflict with a selected one.
 
 ### Phase 7: Validation Criteria
 
